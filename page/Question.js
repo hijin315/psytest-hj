@@ -6,7 +6,14 @@ import {firebase_db} from "../firebaseConfig"
 
 import Loading from "./Loading";
 import Constants from 'expo-constants';
-
+//애드몹 설정을 위한 엑스포 애드몹 라이브라리 임포트!
+import {
+    setTestDeviceIDAsync,
+    AdMobBanner,
+    AdMobInterstitial,
+    PublisherBanner,
+    AdMobRewarded
+  } from 'expo-ads-admob';
 
 const Question = ({navigation,route}) => {
 
@@ -42,19 +49,23 @@ const Question = ({navigation,route}) => {
             question_idx:questionState.idx,
             answer_idx:a.idx,
             answer:a.answer_title,
-            desc:a.answer_desc,
+            desc:a.answer_desc
     
         }
 
-        const user_id = Constants.installationId;
-        console.log(questionState)
-        console.log(new_history)
-        console.log(user_id)
+        const user_id = Constants.installationId;    
 
-        
-        firebase_db.ref('/history/'+user_id+'/'+ questionState.idx).set(new_history,function(error){
-            console.log(error)
+        firebase_db.ref('/history/'+user_id+'/'+ questionState.idx).set(new_history,async (error) => {
             if(error == null){
+
+            //안드로이드와 IOS 각각 광고 준비 키가 다르기 때문에 디바이스 성격에 따라 다르게 초기화 시켜줘야 합니다.
+            Platform.OS === 'ios' 
+            ? await AdMobInterstitial.setAdUnitID("ca-app-pub-4093918702121999/3774807529") 
+            : await AdMobInterstitial.setAdUnitID("ca-app-pub-4093918702121999/4357902086")
+            await AdMobInterstitial.requestAdAsync({ servePersonalizedAds: true});
+            await AdMobInterstitial.showAdAsync();
+            AdMobInterstitial.addEventListener("interstitialDidClose", () => {
+                console.log("interstitialDidClose")
                 //저장에 문제가 없을 경우에만 결과 페이지로 이동!
                 navigation.navigate("Result",{
                     desc:a.answer_desc,
@@ -62,6 +73,12 @@ const Question = ({navigation,route}) => {
                     question:questionState.question,
                     answer:a.answer_title
                 })
+              
+            });
+
+
+
+                
             }
         });
         

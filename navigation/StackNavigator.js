@@ -25,14 +25,12 @@ const StackNavigator = () =>{
                     backgroundColor: "black",
                     borderBottomColor: "black",
                     shadowColor: "black",
-                    height:100
+                    height:70
                 },
                 headerTintColor: "#FFFFFF",
                 headerBackTitleVisible: false
-            }}
-            
+            }}   
         >
-
             {/* 컴포넌트를 페이지로 만들어주는 엘리먼트에 끼워 넣습니다. 이 자체로 이제 페이지 기능을 합니다*/}
 
             {/* 메인페이지와 푼 문제들을 확인하는 히스토리 페이지가 담겨 있는 탭 페이지, 즉 탭 네비게이터를 넣습니다*/}

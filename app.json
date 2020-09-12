@@ -1,7 +1,8 @@
 {
   "expo": {
     "name": "심리테스트 앱",
-    "slug": "sparta-psytest-hj",
+    "description" : "psytest-hj",
+    "slug": "psytest-hj",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -17,8 +18,21 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
-    },
+      "supportsTablet": true,
+      
+      "buildNumber": "1.0.0",
+      "bundleIdentifier": "com.heejin.psytest",
+      "config": {
+        "googleMobileAdsAppId": "ca-app-pub-4093918702121999~2418134459"
+      }
+ },
+ "android": {
+      "package": "com.heejin.psytest",
+      "versionCode": 1,
+      "config": {
+        "googleMobileAdsAppId": "ca-app-pub-4093918702121999~4764794875"
+      }
+ },
     "web": {
       "favicon": "./assets/favicon.png"
     }

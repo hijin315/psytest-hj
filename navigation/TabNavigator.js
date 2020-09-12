@@ -14,7 +14,7 @@ const TabNavigator = ({navigation,route}) =>{
   
     useEffect(()=>{
         navigation.setOptions({
-            title:"오늘은 심리테스트 각"
+            title:" 심리테스트"
         })
     },[])
 

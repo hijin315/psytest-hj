@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from "react";
-import { StyleSheet, Text, View,ScrollView,Dimensions,TouchableOpacity,ImageBackground } from 'react-native';
+import { StyleSheet, Platform, View,ScrollView } from 'react-native';
 
 //Main.js로 들어오면 폴더 경로가 바뀌므로 변경해줘야합니다.
 //페이지라는 폴더에서 나가 컴포넌트 폴더로 들어가야 하므로
@@ -16,6 +16,18 @@ import {firebase_db} from "../firebaseConfig"
 import category from "../category.json"
 
 import Loading from "./Loading";
+
+
+//애드몹 설정을 위한 엑스포 애드몹 라이브라리 임포트!
+import {
+  setTestDeviceIDAsync,
+  AdMobBanner,
+  AdMobInterstitial,
+  PublisherBanner,
+  AdMobRewarded
+} from 'expo-ads-admob';
+
+
 //책갈비에선 Main 컴포넌트에게 Props 형태로 
 // 페이지 이동 객체 데이터를 전달해줍니다
 export default Main = ({navigation}) => {
@@ -45,6 +57,7 @@ export default Main = ({navigation}) => {
   //기본 사용법입니다.
   //그리고 이 콜백 함수 안에 자동으로 구현되어야 할 로직을 작성해 넣으면 됩니다.
   useEffect(()=>{
+
     console.log("나 처음이자 마지막으로 실행 된다~~")
     firebase_db.ref('/question').once('value').then((snapshot) => {
       console.log("파이어베이스에서 데이터 가져왔습니다!!")
@@ -91,10 +104,24 @@ export default Main = ({navigation}) => {
                   })}
                 </View>
             </ScrollView>
+            {Platform.OS === 'ios' ? (
+                <AdMobBanner
+                  bannerSize="fullBanner"
+                  servePersonalizedAds={true}
+                  adUnitID="ca-app-pub-4093918702121999/6080394908"
+                  style={styles.banner}
+                />
+            ) : (
+                <AdMobBanner
+                  bannerSize="fullBanner"
+                  servePersonalizedAds={true}
+                  adUnitID="ca-app-pub-4093918702121999/2909089047"
+                  style={styles.banner}
+                />
+            )}
     </View>
   );
 }
-
 const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -139,4 +166,9 @@ const styles = StyleSheet.create({
       //flex:"wrap" 속성의 경우 박스들이 화면을 넘칠 때 자동으로 밑으로 떨어져 내려가 배치됨
       flexWrap:"wrap"
     },
+    banner: {
+      position:"absolute",
+      bottom:0,
+      width:"100%"
+    }
   });
