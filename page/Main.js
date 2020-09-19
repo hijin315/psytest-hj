@@ -140,8 +140,8 @@ const styles = StyleSheet.create({
     },
     categoryMain:{
       width:100,
-      height:30,
       marginTop:30,
+      height:30,
       marginRight:5,
       marginLeft:13,
       borderRadius:5,
